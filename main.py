@@ -15,7 +15,7 @@ import sys
 import random
 import logging
 import time
-logging.basicConfig(filename='./logfile', level=logging.INFO)
+logging.basicConfig(filename=config.logFileName, level=logging.INFO)
 
 
 TotalNumberCount=0 #for the use of count iteration number
@@ -32,14 +32,14 @@ p=0.44 #the initial acceptance rate
 theta=config.theta #the initial theta
 R=config.R #the initial R
 
-if(rank ==0):
+if(rank==0):
     StartTime = time.asctime( time.localtime(time.time()) )
     logging.info('cpu numbers:'+str(config.CpuNumber))
     logging.info('command name:'+config.CommandName)
     logging.info('parameter numbers:'+str(config.ParameterNumber))
     for i,j in zip(config.RangeLow,config.RangeHigh):
         logging.info('range: '+str(i)+'~'+str(j))
-    logging.info('start time at:'+StartTime)
+    logging.info('start time at:'+StartTime)    
 
 for i in range(config.InitLoopTime):
     #initial interation without temprature drops
@@ -83,19 +83,24 @@ def ALoop(R,T,position,energy,p,theta,MyQueue):
 
     #MPI allgather, EnergyStatus records all core's energy information, StopStatus records any core wanting to stop
     EnergyStatus=np.array(comm.allgather(energy))
+    EnergyStatus=config.energyC*(EnergyStatus-np.min(EnergyStatus))
     StopStatus=np.array(comm.allgather(myStopQueue.isstop()))
-
+    # print(rank,'flag 1')
+    # sys.stdout.flush()
     comm.barrier()
 
     #if any core wants to stop, then do it
     if(np.any(StopStatus)):
         return(T,position,energy,theta,R,0,MyQueue)
-
+    # print(rank,'flag 2')
+    # sys.stdout.flush()
     #the possibility every core jump to the condition of other core    
     JumpPossibility=np.exp(-1*EnergyStatus/T)/np.sum(np.exp(-1*EnergyStatus/T))
     RandomNumber=random.random()
     JumpPossibilitySum=np.array([np.sum(JumpPossibility[:i+1]) for i in range(config.CpuNumber)])
     flag=0
+    # print(rank,'flag 3')
+    # sys.stdout.flush()
     for i,value in enumerate(JumpPossibilitySum):
         if(value>=RandomNumber):
             break
@@ -106,7 +111,8 @@ def ALoop(R,T,position,energy,p,theta,MyQueue):
     
     #the possibility
     NewPositionInformation=np.array(comm.allgather(flag))
-
+    # print(rank,'flag 4')
+    # sys.stdout.flush()
     #adjust R according to the condition of exchange
     countDic={}
     for i in NewPositionInformation:
@@ -116,7 +122,8 @@ def ALoop(R,T,position,energy,p,theta,MyQueue):
     
     #MPI send all the information between two cores related to exchange, the tag is specially numbered
     SendCount=0
-
+    # print(rank,'flag 5',NewPositionInformation,JumpPossibility,JumpPossibilitySum)
+    # sys.stdout.flush()
     TagTemp=10**(len(str(config.CpuNumber))) 
     for i,value in enumerate(NewPositionInformation):
         if(value==rank and i!=rank):
@@ -132,7 +139,8 @@ def ALoop(R,T,position,energy,p,theta,MyQueue):
         energy=comm.recv(source=int(flag), tag=2*(TagTemp**2)+rank*TagTemp+flag)
         theta=comm.recv(source=int(flag), tag=3*(TagTemp**2)+rank*TagTemp+flag)
         MyQueue=comm.recv(source=int(flag), tag=4*(TagTemp**2)+rank*TagTemp+flag)
-
+    # print(rank,'flag 6')
+    # sys.stdout.flush()
 
     comm.barrier()
     return(T,position,energy,theta,R,1,MyQueue)
@@ -165,4 +173,4 @@ if(rank == 0):
         logging.info('core order:'+str(i))
         logging.info('final position:'+','.join(str(x) for x in j))
         logging.info('final energy: '+str(k))
-        logging.info('\n')
+        # logging.info('\n')
