@@ -1,11 +1,12 @@
 #include<iostream>
 #include<cmath>
 using namespace std;
+#define PI  3.14159265358979323846
 int main()
 {
-    double a,b,c,d,e,f;
-    cin>>a>>b>>c>>d>>e>>f;
-    cout<<100000000*abs(a-0.5)*abs(b-0.6)*abs(c-0.7)*abs(d-0.8)*abs(e-0.9)*abs(f-0.1)+50*(abs(a-0.5)+abs(b-0.6)+abs(c-0.7)+abs(d-0.8)+abs(e-0.9)+abs(f-0.1));
-    return 0;
+    double x1,x2,ras;
+    cin>>x1>>x2;
+    ras=20+pow(x1,2)+pow(x2,2)-10*(cos(2*PI*x1)+cos(2*PI*x2));
+    cout<<ras;
 }
          
