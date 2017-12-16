@@ -1,0 +1,115 @@
+INFO:root:cpu numbers:8
+INFO:root:command name:./a
+INFO:root:parameter numbers:6
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:start time at:Sat Dec 16 16:51:57 2017
+INFO:root:temprature start drop at:Sat Dec 16 16:52:14 2017
+INFO:root:cpu numbers:8
+INFO:root:command name:./a
+INFO:root:parameter numbers:6
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:start time at:Sat Dec 16 16:52:45 2017
+INFO:root:temprature start drop at:Sat Dec 16 16:53:02 2017
+INFO:root:program stop at:Sat Dec 16 16:54:50 2017
+INFO:root:accuracy:1e-07,1e-07,1e-07,1e-06,1e-06,1e-06
+INFO:root:core number:0
+INFO:root:final position:0.500000294804,0.600000249733,0.700000094845,0.800000402244,0.89999999123,0.100000699474
+INFO:root:final energy: 8.74935e-05
+INFO:root:
+
+INFO:root:core number:1
+INFO:root:final position:0.500000060904,0.599999888828,0.699999221911,0.800000859736,0.89999997052,0.100000065731
+INFO:root:final energy: 9.52556e-05
+INFO:root:
+
+INFO:root:core number:2
+INFO:root:final position:0.500000584228,0.600000765994,0.699999540234,0.800000000244,0.900000007355,0.1000003742
+INFO:root:final energy: 0.000109589
+INFO:root:
+
+INFO:root:core number:3
+INFO:root:final position:0.499999955433,0.599999951261,0.700000430755,0.800000194402,0.900000143464,0.0999998557945
+INFO:root:final energy: 5.03066e-05
+INFO:root:
+
+INFO:root:core number:4
+INFO:root:final position:0.499999707622,0.599999939027,0.699999717676,0.800000464408,0.899999321844,0.100000700784
+INFO:root:final energy: 0.000123951
+INFO:root:
+
+INFO:root:core number:5
+INFO:root:final position:0.499999935457,0.599998980028,0.700000057816,0.800000028182,0.899998842722,0.100000881988
+INFO:root:final energy: 0.000160489
+INFO:root:
+
+INFO:root:core number:6
+INFO:root:final position:0.500000036046,0.600000109987,0.700000636924,0.799998160492,0.900000032484,0.0999998556493
+INFO:root:final energy: 0.000139965
+INFO:root:
+
+INFO:root:core number:7
+INFO:root:final position:0.499999442004,0.599999898993,0.70000024959,0.799999285959,0.900000104908,0.0999997812092
+INFO:root:final energy: 9.73166e-05
+INFO:root:
+
+INFO:root:cpu numbers:4
+INFO:root:command name:./a
+INFO:root:parameter numbers:6
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:start time at:Sat Dec 16 16:56:06 2017
+INFO:root:temprature start drop at:Sat Dec 16 16:56:18 2017
+INFO:root:program stop at:Sat Dec 16 16:57:24 2017
+INFO:root:accuracy:1e-07,1e-07,1e-07,1e-06,1e-06,1e-06
+INFO:root:core order:0
+INFO:root:final position:0.499998876845,0.599999345014,0.700001711063,0.799999976429,0.90000053726,0.0999975888956
+INFO:root:final energy: 0.000323057
+INFO:root:
+
+INFO:root:core order:1
+INFO:root:final position:0.500001230113,0.59999992253,0.699999698152,0.800000986652,0.900000898544,0.100000408779
+INFO:root:final energy: 0.00019517
+INFO:root:
+
+INFO:root:core order:2
+INFO:root:final position:0.499999421778,0.599998916329,0.699999916752,0.799999972601,0.900000311368,0.0999998691017
+INFO:root:final energy: 0.00011074
+INFO:root:
+
+INFO:root:core order:3
+INFO:root:final position:0.500000304043,0.599999561256,0.700000255459,0.799999665671,0.900000235795,0.0999998038265
+INFO:root:final energy: 8.82272e-05
+INFO:root:
+
+INFO:root:cpu numbers:1
+INFO:root:command name:./a
+INFO:root:parameter numbers:6
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:range: 0.0~1.0
+INFO:root:start time at:Sat Dec 16 16:58:31 2017
+INFO:root:temprature start drop at:Sat Dec 16 16:58:38 2017
+INFO:root:program stop at:Sat Dec 16 16:59:25 2017
+INFO:root:accuracy:1e-07,1e-07,1e-07,1e-06,1e-06,1e-06
+INFO:root:core order:0
+INFO:root:final position:0.500000199586,0.600000027878,0.700000006119,0.79999999437,0.899999991502,0.0999999264283
+INFO:root:final energy: 1.60641e-05
+INFO:root:
+
