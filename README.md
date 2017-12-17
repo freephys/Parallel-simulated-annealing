@@ -9,10 +9,10 @@ license:
 
 How to use it?
 1. Wrap your forward model into form as < command name > parameter1 parameter2 ...
-and its output should be the value of objective function
-2. Use config.ini to config your settings, commonly you just need set, CpuNumber, 
+and its output should be the value of the objective function
+2. Use config.ini to config your settings, commonly you just need set: CpuNumber, 
 ParameterNumber, RangeHigh, RangeLow, CommandName, and stopMoveStep. If you want to
-disable a parameter, just set its sensity accordingly 0.
+disable a parameter, just set its sensity to 0.
 3. I want to wrap the code into some form nicer, but as the dynamic support for mpi4py
 is really poor, I could just use this not pretty good-looking coding structure. But at
 least, it could run, isn't it?
