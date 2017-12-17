@@ -79,4 +79,4 @@ stopRepeateTimes=cf.getint('model','stopRepeateTimes')
 theta=cf.getfloat('model','theta')
 
 energyC=cf.getfloat('model','energyC')
-logFileName=cf.getfloat('model','logFileName')
+logFileName=cf.get('model','logFileName')
