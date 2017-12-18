@@ -483,10 +483,12 @@ if(__name__=='__main__'):
             logging.info('final position:'+','.join(str(x) for x in j))
             logging.info('final energy: '+str(k))
 
-        minEnergy=min(sa.finalEnergyInformation)
-        minPosition=sa.finalPositionInformation[sa.finalEnergyInformation.index(minEnergy)]
-        print(minEnergy,end=' ')
-        for i in minPosition:
-            print(i,end=' ')
+        # minEnergy=min(sa.finalEnergyInformation)
+        # minPosition=sa.finalPositionInformation[sa.finalEnergyInformation.index(minEnergy)]
+        # print(minEnergy,end=' ')
+        # for i in minPosition:
+        #     print(i,end=' ')
+    commMaster.Gather(np.array([sa.energy]),None,root=0)
+    commMaster.Gather(np.array(sa.position),None,root=0)
 
     commMaster.Disconnect()
