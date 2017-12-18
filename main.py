@@ -116,7 +116,8 @@ class SA(object):
         self.logFileName=logFileName
 
         self.useBash=True
-        self.objectFunction=None
+        # self.objectFunction=None
+        self.numCount=0
 
     def configParse(self,configFileName='./config.ini'):
         cf=configparser.ConfigParser()
@@ -211,9 +212,28 @@ class SA(object):
         result=self.Raw_function(parameters,command=self.CommandName)
         return result
 
-    def setObjectFunction(objectFunction):
+    def setObjectFunction(self):
         self.useBash=False
-        self.objectFunction=objectFunction
+        
+    def objectFunction(self,parameters):
+        # TagTemp=10**(len(str(self.CpuNumber))) 
+        # print('flag 1',parameters,rank)
+        # sys.stdout.flush()
+        value=np.zeros(1)  
+        commMaster.Gather(parameters,None,root=0)
+        commMaster.Scatter(None,value,root=0)
+        self.numCount+=1
+        # print(rank,self.numCount)
+        # sys.stdout.flush()
+        # commMaster.Barrier()
+        # print('flag 2')
+        # sys.stdout.flush()    
+        # print(rank,'flag 1')
+        # sys.stdout.flush()
+        # value=commMaster.recv(source=0,tag=rank)
+        # print(rank,value)
+        # sys.stdout.flush()
+        return value[0]
     
     def Step(self,initFlag):
         '''
@@ -234,7 +254,9 @@ class SA(object):
         theta: theta that controls moving step this time [a positive value] 
         flag: if 0, return to a lower energy; if 1, return to a higher energy; if 2, remain in the origin position 
         '''
+        # self.numCount+=1
         #control temprature
+        OutOfRange=False
         if(initFlag==0):
             self.T=self.T
         else:
@@ -249,17 +271,23 @@ class SA(object):
         for i,value in enumerate(positionNew):
             if(value<self.RangeLow[i]):
                 self.theta=self.theta/1.93
-                return(2)
+                OutOfRange=True
+                positionNew=self.position
             if(value>self.RangeHigh[i]):
                 self.theta=self.theta/1.93
-                return(2)
-
+                OutOfRange=True
+                positionNew=self.position
+        # print(rank,'flag')
+        # sys.stdout.flush()
         if(self.useBash):    
             energyNew=self.f(positionNew)
         else:
             energyNew=self.objectFunction(positionNew)
-        
         #jump status
+
+        if(OutOfRange):
+            return(2)
+
         if(energyNew<self.energy):
             self.position=positionNew
             self.energy=energyNew
@@ -282,7 +310,10 @@ class SA(object):
         '''
         #stopqueue refresh
         self.myStopQueue.refresh()
-
+        # print(rank,self.R)
+        # sys.stdout.flush()
+        if(rank==0):
+            commMaster.send(self.R,dest=0,tag=0)
         #the normal step between exchanges
         for i in range(self.R):
             flag=self.Step(1)
@@ -367,54 +398,58 @@ class SA(object):
         self.MyQueue=ItemStore(self.ItemStoreSize)
         self.myStopQueue=stopQueue(self.ParameterNumber,self.stopRepeateTimes,self.stopMoveStep)
         self.position=self.RandomInit()
-
         if(self.useBash):
             self.energy=self.f(self.position)
         else:
             self.energy=self.objectFunction(self.position)
+            # print('flag 1')
+            # sys.stdout.flush()
 
         self.p=0.44
 
     def initRepeate(self):
+        # print(rank,self.InitLoopTime)
+        # sys.stdout.flush()
+        if(rank==0):
+            commMaster.send(self.InitLoopTime,dest=0,tag=0)
+        # print(rank,'flag')
+        # sys.stdout.flush()
+        ddcount=0
         for i in range(self.InitLoopTime):
+            ddcount+=1
             #initial interation without temprature drops
+            # print(rank,'flag2',ddcount)
+            # sys.stdout.flush()
             flag=self.Step(0)
-
+            # print(rank,'flag3',ddcount)
+            # sys.stdout.flush()
             #recalculate acceptance rate to adjust moving step
             if(self.MyQueue.flag()):
                 self.p=self.MyQueue.getP()
             self.MyQueue.add(flag)
+            comm.barrier()
+            # print(rank,'flag4',ddcount)
+            # sys.stdout.flush()
+            # print('rank:',rank,'T:',self.T,'position:',self.position,'energy:',self.energy,'theta:',self.theta,'R:',self.R,'flag:',flag,'p',self.p)
+            # sys.stdout.flush()
         
     def endEnvironment(self):
+        if(rank==0):
+            commMaster.send(0,dest=0,tag=0)
         self.finalPositionInformation=comm.allgather(self.position)
         self.finalEnergyInformation=comm.allgather(self.energy)
 
-def MPIuser():
-    global comm
-    global rank
-    global size
-    comm = MPI.COMM_WORLD 
-    rank = comm.Get_rank()
-    size = comm.Get_size()
-    sa=SA()
-    sa.initEnvironment()
-    sa.initRepeate()
-    MainFlag=1
-    while(MainFlag==1 and sa.T>10e-8):
-        sa.TotalNumberCount+=sa.R
-        MainFlag=sa.ALoop()
-    sa.endEnvironment()
-    minEnergy=min(sa.finalEnergyInformation)
-    minPosition=sa.finalPositionInformation[sa.finalEnergyInformation.index(minEnergy)]
-    return minPosition,minEnergy
+
 
 if(__name__=='__main__'):
     commMaster = MPI.Comm.Get_parent()
     comm = MPI.COMM_WORLD 
     rank = comm.Get_rank()
     size = comm.Get_size()
-
+    # print(rank,'dd')
+    # sys.stdout.flush()
     sa=SA()
+    sa.setObjectFunction()
     sa.initEnvironment()
     logging.basicConfig(filename=sa.logFileName, level=logging.INFO)
 
