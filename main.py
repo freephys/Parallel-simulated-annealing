@@ -292,7 +292,7 @@ class SA(object):
 
             self.MyQueue.add(flag)
             #TODO remove it
-            # print('rank:',rank,'T:',T,'position:',position,'energy:',energy,'theta:',theta,'R:',R,'flag:',flag,'p',p)
+            # print('rank:',rank,'T:',self.T,'position:',self.position,'energy:',self.energy,'theta:',self.theta,'R:',self.R,'flag:',flag,'p',self.p)
             # sys.stdout.flush()
 
         #MPI allgather, EnergyStatus records all core's energy information, StopStatus records any core wanting to stop
@@ -409,6 +409,7 @@ def MPIuser():
     return minPosition,minEnergy
 
 if(__name__=='__main__'):
+    commMaster = MPI.Comm.Get_parent()
     comm = MPI.COMM_WORLD 
     rank = comm.Get_rank()
     size = comm.Get_size()
@@ -452,3 +453,5 @@ if(__name__=='__main__'):
         print(minEnergy,end=' ')
         for i in minPosition:
             print(i,end=' ')
+
+    commMaster.Disconnect()
