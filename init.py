@@ -14,12 +14,26 @@ import sys
 import configparser
 import os
 
+def f(parameters):
+    objectFunction=gg
+    parameterList=''
+    for i in parameters:
+        parameterList+=str(i)+','
+    parameterList='objectFunction('+parameterList[:-1]+')'
+    # print(eval(parameterList))
+    # print(parameterList)
+    value=eval(parameterList)
+    return value
+
+
 cf=configparser.ConfigParser()
 cf.read('./config.ini')
 CpuNumber=cf.getint('system','CpuNumber')
 ParameterNumber=cf.getint('model','ParameterNumber')
 
-def SA(f):
+def SA(g):
+    global gg
+    gg=g
     comm = MPI.COMM_SELF.Spawn('python',args=[os.path.dirname(os.path.abspath(__file__))+'/main.py'],maxprocs=CpuNumber)
     pool=mp.Pool(processes=CpuNumber)
 

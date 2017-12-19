@@ -5,31 +5,31 @@ INFO:root:range: -32.0~32.0
 INFO:root:range: -32.0~32.0
 INFO:root:range: -32.0~32.0
 INFO:root:range: -32.0~32.0
-INFO:root:start time at:Mon Dec 18 20:46:50 2017
-INFO:root:temprature start drop at:Mon Dec 18 20:46:52 2017
-INFO:root:program stop at:Mon Dec 18 20:47:16 2017
+INFO:root:start time at:Tue Dec 19 17:31:14 2017
+INFO:root:temprature start drop at:Tue Dec 19 17:31:18 2017
+INFO:root:program stop at:Tue Dec 19 17:31:44 2017
 INFO:root:accuracy:0.0001,0.0001,0.0001,0.0001
 INFO:root:core order:0
-INFO:root:final position:2.0005330332e-06,-1.26590889242e-06,6.62742107123e-07,6.88317659315e-07
-INFO:root:final energy: 5.10597878334e-06
+INFO:root:final position:-5.13170762719e-06,-1.62340587167e-06,-9.99755664486e-06,3.84172622076e-06
+INFO:root:final energy: 2.39740743315e-05
 INFO:root:core order:1
-INFO:root:final position:3.42964547344e-06,-2.30447951889e-06,-5.52203883439e-08,9.03124628602e-07
-INFO:root:final energy: 8.45983006714e-06
+INFO:root:final position:1.76272591921e-05,-1.14684406711e-05,-3.72762407787e-05,4.80254738086e-06
+INFO:root:final energy: 8.61453263359e-05
 INFO:root:core order:2
-INFO:root:final position:-2.8389515119e-06,7.52239824939e-06,2.03173909052e-06,2.55340325227e-06
-INFO:root:final energy: 1.73548194629e-05
+INFO:root:final position:-2.95796745411e-06,8.95411448294e-06,1.27232326034e-05,-1.61118588933e-05
+INFO:root:final energy: 4.51867201652e-05
 INFO:root:core order:3
-INFO:root:final position:1.53825107643e-06,-2.72896453615e-06,-5.47394639748e-06,-2.25152777007e-06
-INFO:root:final energy: 1.33938094682e-05
+INFO:root:final position:3.81978326731e-06,-9.5535797893e-07,-5.6494193098e-06,5.01239323211e-06
+INFO:root:final energy: 1.70348789088e-05
 INFO:root:core order:4
-INFO:root:final position:-3.87042052739e-07,-2.58175780736e-06,-6.19556928713e-06,-2.1653786642e-06
-INFO:root:final energy: 1.41267262994e-05
+INFO:root:final position:-3.83691879703e-06,-8.91152839188e-06,1.34010579368e-05,-1.23965187282e-06
+INFO:root:final energy: 3.31835348786e-05
 INFO:root:core order:5
-INFO:root:final position:1.73630398506e-05,8.49497071789e-06,2.5459292426e-06,-7.4638560972e-07
-INFO:root:final energy: 3.90240010977e-05
+INFO:root:final position:-1.56942228952e-05,2.27047286801e-05,-1.74670726404e-05,1.33257962407e-07
+INFO:root:final energy: 6.53334740766e-05
 INFO:root:core order:6
-INFO:root:final position:-1.78271523737e-06,2.29992636007e-06,1.40922282954e-06,-8.80718235706e-07
-INFO:root:final energy: 6.70209199827e-06
+INFO:root:final position:-2.9550742079e-06,-1.27527833922e-05,-6.736492716e-06,-5.89698442053e-06
+INFO:root:final energy: 3.17201510112e-05
 INFO:root:core order:7
-INFO:root:final position:1.71560465363e-06,-4.98293663565e-06,1.33014227605e-06,-8.9820188282e-06
-INFO:root:final energy: 2.0997625843e-05
+INFO:root:final position:1.90523822462e-05,-1.00698075547e-05,-5.46903275655e-06,-6.16170109287e-07
+INFO:root:final energy: 4.448563794e-05
