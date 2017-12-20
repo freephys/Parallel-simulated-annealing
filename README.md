@@ -4,6 +4,8 @@
 A python interface of Parallel simulated annealing algorithms, converts from:
 
 > Lou Z, Reinitz J. Parallel simulated annealing using an adaptive resampling interval[J]. Parallel computing, 2016, 53: 23-31.
+> Chu K W, Deng Y, Reinitz J. Parallel simulated annealing by mixing of states[J]. Journal of Computational Physics, 1999, 148(2): 646-662.
+
 
 ## Introduction
 It's part of the graduation thesis of my dual major: computer science. 
