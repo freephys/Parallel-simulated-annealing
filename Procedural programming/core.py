@@ -71,7 +71,7 @@ def RandomInit():
     '''
     result=np.zeros(config.ParameterNumber)
     for i in range(config.ParameterNumber):
-        result[i]=(((config.RangeHigh[i]+config.RangeLow[i])/2-0.5)+random.random())*(config.RangeHigh[i]-config.RangeLow[i])
+        result[i]=(((self.RangeHigh[i]+self.RangeLow[i])/2-0.5)+random.random())*(self.RangeHigh[i]-self.RangeLow[i])
     for i,value in enumerate(result):
         if(value==np.inf or value==-1*np.inf):
             result[i]=(random.random()-0.5)*config.setrange
