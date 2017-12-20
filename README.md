@@ -1,14 +1,14 @@
 # Parallel-simulated-annealing
 ### Code Author: Ziyi Xi(xiziyi2015@gmail.com)
 ### Algorithms' Authors: Zhihao Lou(zhlou@uchicago.edu), John Reinitz(reinitz@galton.uchicago.edu)
-A python interface of Parallel simulated annealing algorithms, convert from:
+A python interface of Parallel simulated annealing algorithms, converts from:
 
 > Lou Z, Reinitz J. Parallel simulated annealing using an adaptive resampling interval[J]. Parallel computing, 2016, 53: 23-31.
 
 ## Introduction
 It's part of the graduation thesis of my dual major: computer science. 
 
-Here are mainly two parts of the program. The first one is to realize the algorithm using mpi4py, namely mpi for python. I have made some changes of the raw algorithms to control the possible boundary problem and other problems. The second one is an interface for different programming languages. As for Python and Julia, you can simply call the function SA() of the init.py in the root directory, simply pass the object function. However, for Matlab users, you might have to copy all the document in the matlab directory to your matlab root directory,  and design a matlab function which receives parameters and return the value of the object function. Thus you should use python to call the init.py, namely:
+Here are mainly two parts of the program. The first one is to realize the algorithm using mpi4py, namely mpi for python. I have made some changes of the raw algorithms to control the possible boundary problem and other problems. The second one is an interface for different programming languages. As for Python and Julia, you can simply call the function SA() of the init.py in the root directory, simply pass the object function. However, for Matlab users, you might have to copy all the document in the matlab directory to your matlab root directory (namely the forward model in),  and design a matlab function which receives parameters and return the value of the object function. Thus you should use python to call the init.py, namely:
 ```
 python init.py
 ```
@@ -73,13 +73,13 @@ energyC=1
 logFileName=logfile
 ```
 
-I believe the main config you might want to change is CpuNumber(number of the cores you want to use when called from Python and Julia, also around $\frac{3}{2}$ cores you want to call in Matlab), ParameterNumber(Numbers of your parameter), RangeHigh, RangeLow, and CommandName(if you receive and print values to the command line), sensity(the relative value of the moving step you wish for each parameter), stopMoveStep, logFileName. You could also change the initial temperature T if you like. 
+I believe the main config you might want to change is CpuNumber(numbers of the cores you want to use when called from Python and Julia, also around $$\frac{3}{2}$$ cores you want to call in Matlab), ParameterNumber(Numbers of your parameter), RangeHigh, RangeLow, and CommandName(if you receive and print values to the command line), sensity(the relative value of the moving step you wish for each parameter), stopMoveStep, logFileName. You could also change the initial temperature T if you like. 
 
-Finally, when the program terminate, it will return 
+Finally, when the program terminates, it will return values as the form:
 ```
-final energy parameter1 parameter2 parameter3
+finalenergy parameter1 parameter2 parameter3
 ```
-and a log file recording status and final result of each core, the return values are simply the smallest one. You might also redirect the output of each step by using:
+and a log file recording status and final result of each core, the return value mentioned above is simply the smallest one. You might also redirect the output of each step by using:
 ```
 python init.py > mylog
 ```
@@ -102,4 +102,13 @@ And if you use matlab, please refer to http://cn.mathworks.com/help/matlab/matla
 Good luck! If you are a skilled python user, I believe you could be familar with the procedures.
 
 ## Possible Problems
-If you encounter any problems, please feel free to contact me(xiziyi2015@gmail.com). And if you Matlab is too old, it may consume too much memory. According to my test, if I use Matlab R2017b, with a 16G memory in my computer, it could start with around 8 CpuNumbers. But as for the machine in my laboratory, with a Matlab version of R2015a, the memory of 128G could simply support 10 CpuNumbers or it will raise problems.
+If you encounter any problems, please feel free to contact me(xiziyi2015@gmail.com). And if your Matlab version is too old, it may consume too much memory. According to my test, if I use Matlab R2017b, with a 16G memory in my computer, it could start with around 8 CpuNumbers. But as for the machine in my laboratory, with a Matlab version of R2015a, the memory of 128G could simply support 10 CpuNumbers or it will raise problems.
+
+## Acknowledgement
+Thanks to Prof. Guangzhong Sun, who is the mentor of the thesis. 
+
+Thanks to Prof. Daoyuan Sun, who gave me this topic to solve. 
+
+Thanks to Dr. Xinghua Jia, who gave me the test function of Matlab.
+
+Thanks to my roommate Sixue Xu, who gave me inspire of the algorithm.
