@@ -105,7 +105,7 @@ Good luck! If you are a skilled python user, I believe you could be familar with
 If you encounter any problems, please feel free to contact me(xiziyi2015@gmail.com). And if your Matlab version is too old, it may consume too much memory. According to my test, if I use Matlab R2017b, with a 16G memory in my computer, it could start with around 8 CpuNumbers. But as for the machine in my laboratory, with a Matlab version of R2015a, the memory of 128G could simply support 10 CpuNumbers or it will raise problems.
 
 ## Acknowledgement
-Thanks to Prof. Guangzhong Sun, who is the mentor of the thesis. 
-Thanks to Prof. Daoyuan Sun, who gave me this topic to solve. 
-Thanks to Dr. Xinghua Jia, who gave me the test function of Matlab.
-Thanks to my roommate Sixue Xu, who gave me inspire of the algorithm.
+1. Thanks to Prof. Guangzhong Sun, who is the mentor of the thesis. 
+2. Thanks to Prof. Daoyuan Sun, who gave me this topic to solve. 
+3. Thanks to Dr. Xinghua Jia, who gave me the test function of Matlab.
+4. Thanks to my roommate Sixue Xu, who gave me inspire of the algorithm.
