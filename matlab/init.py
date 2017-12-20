@@ -8,30 +8,32 @@ A Simulated annealing framework for inverse
 """
 
 from mpi4py import MPI
-import multiprocessing as mp
+# import multiprocessing as mp
 import numpy as np
 import sys
 import configparser
 import os
+import wrap
 
-cf=configparser.ConfigParser()
-cf.read('./config.ini')
-CpuNumber=cf.getint('system','CpuNumber')
-ParameterNumber=cf.getint('model','ParameterNumber')
+def SA(functionName='test'):
+    cf=configparser.ConfigParser()
+    cf.read('./config.ini')
+    CpuNumber=cf.getint('system','CpuNumber')
+    ParameterNumber=cf.getint('model','ParameterNumber')
 
-def SA(f):
     comm = MPI.COMM_SELF.Spawn('python',args=[os.path.dirname(os.path.abspath(__file__))+'/main.py'],maxprocs=CpuNumber)
-    pool=mp.Pool(processes=CpuNumber)
+    
+    pool=wrap.PoolMatlab(CpuNumber,functionName)
 
     positionContainer=np.zeros((CpuNumber,ParameterNumber))
 
     comm.Gather(None,positionContainer,root=MPI.ROOT)
-    comm.Scatter(np.array(pool.map(f,positionContainer)),None,root=MPI.ROOT) 
+    comm.Scatter(np.array(pool.map(positionContainer)),None,root=MPI.ROOT) 
 
     R=int(comm.recv(source=0,tag=0))
     for i in range(R):
         comm.Gather(None,positionContainer,root=MPI.ROOT)
-        comm.Scatter(np.array(pool.map(f,positionContainer)),None,root=MPI.ROOT)
+        comm.Scatter(np.array(pool.map(positionContainer)),None,root=MPI.ROOT)
 
     while(R!=0):
         R=int(comm.recv(source=0,tag=0))
@@ -39,7 +41,7 @@ def SA(f):
             break
         for i in range(R):
             comm.Gather(None,positionContainer,root=MPI.ROOT)
-            comm.Scatter(np.array(pool.map(f,positionContainer)),None,root=MPI.ROOT)
+            comm.Scatter(np.array(pool.map(positionContainer)),None,root=MPI.ROOT)
 
     energyContainer=np.zeros(CpuNumber)
     comm.Gather(None,energyContainer,root=MPI.ROOT)
@@ -51,11 +53,4 @@ def SA(f):
     comm.Disconnect()
 
 if(__name__=='__main__'):
-    def f(parameters):
-        x1=parameters[0]
-        x2=parameters[1]
-        x3=parameters[2]
-        x4=parameters[3]
-        res=-20*np.exp(-0.2*np.sqrt(0.25*(x1*x1+x2*x2+x3*x3+x4*x4)))-np.exp(0.25*(np.cos(4*x1)+np.cos(4*x2)+np.cos(4*x3)+np.cos(4*x4)))+20+np.exp(1)
-        return res
-    print(SA(f))
+    SA(functionName='Forward')

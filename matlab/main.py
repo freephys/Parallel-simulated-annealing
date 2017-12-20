@@ -180,10 +180,17 @@ class SA(object):
         '''
         result=np.zeros(self.ParameterNumber)
         for i in range(self.ParameterNumber):
-            result[i]=(((self.RangeHigh[i]+self.RangeLow[i])/2-0.5)+random.random())*(self.RangeHigh[i]-self.RangeLow[i])
+            result[i]=(random.random()-0.5)*(self.RangeHigh[i]-self.RangeLow[i])+(self.RangeHigh[i]+self.RangeLow[i])/2
         for i,value in enumerate(result):
             if(value==np.inf or value==-1*np.inf):
                 result[i]=(random.random()-0.5)*self.setrange
+
+        if(rank == 0):
+            print('dd',result)
+            print(self.RangeHigh[0],self.RangeLow[0],(random.random()-0.5)*(self.RangeHigh[0]-self.RangeLow[0])+(self.RangeHigh[0]+self.RangeLow[0])/2)
+            print(self.RangeLow)
+            sys.stdout.flush()
+
         return result
 
     def Raw_function(self,parameters,command=''):
@@ -323,8 +330,8 @@ class SA(object):
 
             self.MyQueue.add(flag)
             #TODO remove it
-            # print('rank:',rank,'T:',self.T,'position:',self.position,'energy:',self.energy,'theta:',self.theta,'R:',self.R,'flag:',flag,'p',self.p)
-            # sys.stdout.flush()
+            print('rank:',rank,'T:',self.T,'position:',self.position,'energy:',self.energy,'theta:',self.theta,'R:',self.R,'flag:',flag,'p',self.p)
+            sys.stdout.flush()
 
         #MPI allgather, EnergyStatus records all core's energy information, StopStatus records any core wanting to stop
         EnergyStatus=np.array(comm.allgather(self.energy))
@@ -430,8 +437,8 @@ class SA(object):
             comm.barrier()
             # print(rank,'flag4',ddcount)
             # sys.stdout.flush()
-            # print('rank:',rank,'T:',self.T,'position:',self.position,'energy:',self.energy,'theta:',self.theta,'R:',self.R,'flag:',flag,'p',self.p)
-            # sys.stdout.flush()
+            print('rank:',rank,'T:',self.T,'position:',self.position,'energy:',self.energy,'theta:',self.theta,'R:',self.R,'flag:',flag,'p',self.p)
+            sys.stdout.flush()
         
     def endEnvironment(self):
         if(rank==0):

@@ -1,24 +1,105 @@
-A Simulated annealing framework for inverse
+# Parallel-simulated-annealing
+### Code Author: Ziyi Xi(xiziyi2015@gmail.com)
+### Algorithms' Authors: Zhihao Lou(zhlou@uchicago.edu), John Reinitz(reinitz@galton.uchicago.edu)
+A python interface of Parallel simulated annealing algorithms, convert from:
 
-copyright:
-    ZIYI XI(xiziyi2015@gmail.com)
+> Lou Z, Reinitz J. Parallel simulated annealing using an adaptive resampling interval[J]. Parallel computing, 2016, 53: 23-31.
 
-license:
-    GNU General Public License, Version 3
-    (https://www.gnu.org/licenses/gpl-3.0.en.html)
+## Introduction
+It's part of the graduation thesis of my dual major: computer science. 
 
-How to use it?
-1. Wrap your forward model into form as < command name > parameter1 parameter2 ...
-and its output should be the value of the objective function
-2. Use config.ini to config your settings, commonly you just need set: CpuNumber, 
-ParameterNumber, RangeHigh, RangeLow, CommandName, and stopMoveStep. If you want to
-disable a parameter, just set its sensity to 0.
-3. I want to wrap the code into some form nicer, but as the dynamic support for mpi4py
-is really poor, I could just use this not pretty good-looking coding structure. But at
-least, it could run, isn't it?
-4. I believe you could use your code interactiving with bash, to call the command: 
-mpiexec -n < core you want to use which is also CPUNUMBER in config> python main.py, 
-and it returns a list of number in the form such as 0 1 2 3, here 0 is the final objective 
-function, 1 2 3 are parameters in the optimation form. I think it's easy for you to analysis.
-5. I strongly suggest you to use anaconda and install mpi4py using "conda install mpi4py", 
-thus this code could run!
+Here are mainly two parts of the program. The first one is to realize the algorithm using mpi4py, namely mpi for python. I have made some changes of the raw algorithms to control the possible boundary problem and other problems. The second one is an interface for different programming languages. As for Python and Julia, you can simply call the function SA() of the init.py in the root directory, simply pass the object function. However, for Matlab users, you might have to copy all the document in the matlab directory to your matlab root directory,  and design a matlab function which receives parameters and return the value of the object function. Thus you should use python to call the init.py, namely:
+```
+python init.py
+```
+And change the end part of init.py to:
+```
+if(__name__=='__main__'):
+    SA(functionName='Forward')
+```
+Here Forward should be the name of your function designed. If you want to use C++ or Fortran, please refer to test section: ctypes. You could wrap your code using ctypes or something else in python, and regard it as a pure python ufunc. 
+
+What's more, In the Procedural programming directory, you could use:
+```
+mpiexec -n <CPU numbers in your config section> python test.py
+```
+to call any function you design as long as it receive parameters from the command line in order and print the object value to the command line.
+
+## Config file
+Here is the full config file:
+```
+[algorithms]
+#The speed of reducing temperature
+TLambda=0.001
+#The speed of moving step change
+K=1
+#The coefficient of moving step
+C=1
+#Initial temperature
+T=5000
+#Initial time interval for information of different cores to exchange
+R=300
+#Initial time for selecting random initial position and step adjustment
+InitLoopTime=100
+#The time interval to renew the acceptance rate p, larger ItemStoreSize will reduce the accuracy of the final result and enlarge the time consumed, but less ItemStoreSize will make the program unstable
+ItemStoreSize=10
+
+[system]
+#The number of processors used, using mpiexec -n <CpuNumber> python main.py 
+CpuNumber=4
+
+[model]
+#The dimension of the parameter space
+ParameterNumber=4
+#The upper barrier of the parameter space, using inf if no barrier defined
+RangeHigh=16,36,3.7,4.4
+#The lower barrier of the parameter space, using -inf if no barrier defined
+RangeLow=6,26,2.7,3.4
+#if inf or -inf, at least give a range of [-setrange,setrange]
+setrange=1
+#The command name of the forward program. Since just writing a small code will enable feathers such as ./a 2 3 4, in which 2,3,4 are parameters input, and the program return a simple value such as 222.344 as the object value that need to be optimized.
+CommandName=./ignore this part
+#sensity of different parameters. If you want to move a parameter more quickily, just enlarge the value accordingly
+sensity=1,1,0.1,0.1
+#Initial moving step, not matter actually
+stopMoveStep=0.001,0.001,0.0001,0.0001
+#criterio of stoping. Any core which moves its step less than theta for stopRepeateTimes times will cause the program to end
+stopRepeateTimes=40
+#initial moving step for sensity=1
+theta=0.01
+#Control the sensity of energy change
+energyC=1
+#Control the name of the logfile
+logFileName=logfile
+```
+
+I believe the main config you might want to change is CpuNumber(number of the cores you want to use when called from Python and Julia, also around $\frac{3}{2}$ cores you want to call in Matlab), ParameterNumber(Numbers of your parameter), RangeHigh, RangeLow, and CommandName(if you receive and print values to the command line), sensity(the relative value of the moving step you wish for each parameter), stopMoveStep, logFileName. You could also change the initial temperature T if you like. 
+
+Finally, when the program terminate, it will return 
+```
+final energy parameter1 parameter2 parameter3
+```
+and a log file recording status and final result of each core, the return values are simply the smallest one. You might also redirect the output of each step by using:
+```
+python init.py > mylog
+```
+
+## Install and setup
+Here are necessary python modules you need:
+
+numpy, mpi4py, matlab.
+
+I suggest you install an Anaconda, and use:
+```
+conda install numpy
+pip install mpi4py
+conda install -c mpi4py openmpi 
+```
+Remember, don't use conda to install mpi4py, because as mpich doesn't support dynamic processes, I have to use openmpi. But the mpi4py version of anaconda is bind to mpich.
+
+And if you use matlab, please refer to http://cn.mathworks.com/help/matlab/matlab-engine-for-python.html to install Matlab engine for python.
+
+Good luck! If you are a skilled python user, I believe you could be familar with the procedures.
+
+## Possible Problems
+If you encounter any problems, please feel free to contact me(xiziyi2015@gmail.com). And if you Matlab is too old, it may consume too much memory. According to my test, if I use Matlab R2017b, with a 16G memory in my computer, it could start with around 8 CpuNumbers. But as for the machine in my laboratory, with a Matlab version of R2015a, the memory of 128G could simply support 10 CpuNumbers or it will raise problems.
