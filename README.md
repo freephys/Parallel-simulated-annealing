@@ -75,7 +75,7 @@ energyC=1
 logFileName=logfile
 ```
 
-I believe the main config you might want to change is CpuNumber(numbers of the cores you want to use when called from Python and Julia, also around $$\frac{3}{2}$$ cores you want to call in Matlab), ParameterNumber(Numbers of your parameter), RangeHigh, RangeLow, and CommandName(if you receive and print values to the command line), sensity(the relative value of the moving step you wish for each parameter), stopMoveStep, logFileName. You could also change the initial temperature T if you like. 
+I believe the main config you might want to change is CpuNumber(numbers of the cores you want to use when called from Python and Julia, also around 3/2 cores you want to call in Matlab), ParameterNumber(Numbers of your parameter), RangeHigh, RangeLow, and CommandName(if you receive and print values to the command line), sensity(the relative value of the moving step you wish for each parameter), stopMoveStep, logFileName. You could also change the initial temperature T if you like. 
 
 Finally, when the program terminates, it will return values as the form:
 ```
