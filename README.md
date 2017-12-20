@@ -110,4 +110,4 @@ If you encounter any problems, please feel free to contact me(xiziyi2015@gmail.c
 1. Thanks to Prof. Guangzhong Sun, who is the mentor of the thesis. 
 2. Thanks to Prof. Daoyuan Sun, who gave me this topic to solve. 
 3. Thanks to Dr. Xinghua Jia, who gave me the test function of Matlab.
-4. Thanks to my roommate Sixue Xu, who gave me inspire of the algorithm.
+4. Thanks to my roommate Sixue Xu, who gave me inspiration of the algorithm.
